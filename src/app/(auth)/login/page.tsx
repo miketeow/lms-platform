@@ -1,0 +1,25 @@
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import GithubIcon from "@/public/github.svg";
+export default function LoginPage() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-xl">Welcome back</CardTitle>
+        <CardDescription>Login with your Github Account</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <Button className="w-full" variant="outline">
+          <GithubIcon className="size-4 dark:text-white  fill-current " />
+          Sign in with Github
+        </Button>
+      </CardContent>
+    </Card>
+  );
+}
