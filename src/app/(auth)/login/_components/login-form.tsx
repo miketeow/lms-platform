@@ -9,14 +9,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Loader } from "lucide-react";
+import { Loader, Loader2, Send } from "lucide-react";
 import GithubIcon from "@/public/github.svg";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
 
 export function LoginForm() {
   const [githubPending, startGithubTransition] = useTransition();
+  const [emailPending, startEmailTransition] = useTransition();
+  const [email, setEmail] = useState("");
+  const router = useRouter();
 
   async function signInWithGithub() {
     startGithubTransition(async () => {
@@ -29,6 +33,24 @@ export function LoginForm() {
           },
           onError: () => {
             toast.error("Internal Server Error");
+          },
+        },
+      });
+    });
+  }
+
+  function signInWithEmail() {
+    startEmailTransition(async () => {
+      await authClient.emailOtp.sendVerificationOtp({
+        email: email,
+        type: "sign-in",
+        fetchOptions: {
+          onSuccess: () => {
+            toast.success("Verification email sent, check your inbox");
+            router.push(`/verify-request?email=${email}`);
+          },
+          onError: () => {
+            toast.error("Error Sending Verification Email");
           },
         },
       });
@@ -68,10 +90,29 @@ export function LoginForm() {
         <div className="grid gap-3">
           <div className="grid gap-2">
             <Label htmlFor="wmail">Email</Label>
-            <Input type="email" placeholder="m@example.com" />
+            <Input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              id="wmail"
+              placeholder="Em@example.com"
+              required
+            />
           </div>
 
-          <Button>Continue with Email</Button>
+          <Button disabled={emailPending} onClick={signInWithEmail}>
+            {emailPending ? (
+              <>
+                <Loader2 className="size-4 animate-spin" />
+                <span>Sending Verification Email...</span>
+              </>
+            ) : (
+              <>
+                <Send className="size-4" />
+                <span>Continue with Email</span>
+              </>
+            )}
+          </Button>
         </div>
       </CardContent>
     </Card>
