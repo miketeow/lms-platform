@@ -18,11 +18,11 @@ export default function Navbar() {
       <div className="container flex min-h-16 items-center mx-auto px-4 md:px-6 lg:px-8">
         <Link href="/" className="flex items-center space-x-2 mr-4">
           <Image src="/logo.svg" alt="logo" width={24} height={24} />
-          <span className="font-bold">Aether LMS</span>
+          <span className="font-bold translate-0.5">Aether LMS</span>
         </Link>
 
         {/*desktop navigation*/}
-        <nav className="hidden md:flex md:flex-1 md:items-center md:justify-between">
+        <nav className="hidden md:flex md:flex-1 md:items-center md:justify-between minh">
           <div className="flex items-center space-x-4">
             {navigationItems.map((item) => (
               <Link
