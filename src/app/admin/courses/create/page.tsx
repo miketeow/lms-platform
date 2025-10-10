@@ -38,6 +38,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { RichTextEditor } from "@/components/rich-text-editor/editor";
+import { Uploader } from "@/components/file-uploader/uploader";
 
 export default function CourseCreationPage() {
   const form = useForm({
@@ -160,7 +161,7 @@ export default function CourseCreationPage() {
                   <FormItem className="w-full">
                     <FormLabel>Thumbnail Image</FormLabel>
                     <FormControl>
-                      <Input placeholder="thumbnail url" {...field} />
+                      <Uploader onChange={field.onChange} value={field.value} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
