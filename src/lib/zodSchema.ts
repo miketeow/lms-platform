@@ -1,8 +1,10 @@
 import z from "zod";
 
-export const courseLevels = ["Beginner", "Intermediate", "Advanced"];
+const stripHtml = (html: string) => html.replace(/<[^>]*>?/gm, "");
 
-export const courseStatus = ["Draft", "Published", "Archived"];
+export const courseLevels = ["Beginner", "Intermediate", "Advanced"] as const;
+
+export const courseStatus = ["Draft", "Published", "Archived"] as const;
 
 export const courseCategories = [
   "Web Development",
@@ -24,8 +26,7 @@ export const courseSchema = z.object({
     .max(100, { message: "Title must be at most 100 characters" }),
   description: z
     .string()
-    .min(3, { message: "Description must be at least 3 characters" })
-    .max(100, { message: "Description must be at most 100 characters" }),
+    .min(3, { message: "Description must be at least 3 characters" }),
   fileKey: z.string().min(1, { message: "File is required" }),
   price: z.coerce
     .number<number>()
