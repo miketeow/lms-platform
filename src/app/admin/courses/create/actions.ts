@@ -1,18 +1,16 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { requireAdminApi } from "@/app/data/admin/require-admin-api";
 import prisma from "@/lib/db";
+import { AuthError, ForbiddenError } from "@/lib/errors";
 import { ApiResponse } from "@/lib/types";
 import { courseSchema, CourseSchemaType } from "@/lib/zodSchema";
-import { headers } from "next/headers";
 
 export async function CreateCourse(
   values: CourseSchemaType,
 ): Promise<ApiResponse> {
   try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const session = await requireAdminApi();
     const validation = courseSchema.safeParse(values);
 
     if (!validation.success) {
@@ -25,7 +23,7 @@ export async function CreateCourse(
     await prisma.course.create({
       data: {
         ...validation.data,
-        userId: session?.user.id as string,
+        userId: session.user.id,
       },
     });
 
@@ -34,6 +32,12 @@ export async function CreateCourse(
       message: "Course created successfully",
     };
   } catch (error) {
+    if (error instanceof AuthError) {
+      return { status: "error", message: error.message };
+    }
+    if (error instanceof ForbiddenError) {
+      return { status: "error", message: error.message };
+    }
     console.log(error);
     return {
       status: "error",

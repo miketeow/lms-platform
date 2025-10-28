@@ -63,7 +63,16 @@ export function Uploader({ value, onChange }: iAppProps) {
       });
 
       if (!presignedResponse.ok) {
-        toast.error("Failed to generate presigned URL");
+        let errorMessage = "Failed to generate presigned URL";
+        try {
+          const errorData = await presignedResponse.json();
+          if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch (e) {
+          console.error("Failed to parse error response", e);
+        }
+        toast.error(errorMessage);
         setFileState((prev) => ({
           ...prev,
           uploading: false,
