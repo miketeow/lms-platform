@@ -40,16 +40,23 @@ import { RichTextEditor } from "@/components/rich-text-editor/editor";
 import { Uploader } from "@/components/file-uploader/uploader";
 import { tryCatch } from "@/hooks/try-catch";
 import { useTransition } from "react";
-import { CreateCourse } from "./actions";
+import { CreateCourse } from "../create/actions";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { EditCourse } from "../[courseId]/edit/actions";
 
-export default function CreateCourseForm() {
+type CourseData = CourseSchemaType & { id: string };
+
+interface CourseFormProps {
+  initialData?: CourseData;
+}
+
+export default function CourseForm({ initialData }: CourseFormProps) {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const form = useForm<CourseSchemaType>({
     resolver: zodResolver(courseSchema),
-    defaultValues: {
+    defaultValues: initialData || {
       title: "",
       description: "",
       fileKey: "",
@@ -65,7 +72,11 @@ export default function CreateCourseForm() {
 
   const onSubmit = (values: CourseSchemaType) => {
     startTransition(async () => {
-      const { data: result, error } = await tryCatch(CreateCourse(values));
+      const action = initialData
+        ? EditCourse(values, initialData.id)
+        : CreateCourse(values);
+
+      const { data: result, error } = await tryCatch(action);
 
       if (error) {
         toast.error("An unexpected error occurred. Please try again later.");
@@ -87,7 +98,9 @@ export default function CreateCourseForm() {
       <CardHeader>
         <CardTitle>Basic Information</CardTitle>
         <CardDescription>
-          Provide basic information about the course.
+          {initialData
+            ? "Edit the information about the course "
+            : "Provide basic information about the course."}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -289,7 +302,11 @@ export default function CreateCourseForm() {
             <Button type="submit" disabled={isPending}>
               {isPending ? (
                 <>
-                  Creating... <Loader2 className="animate-spin ml-1" />
+                  Saving... <Loader2 className="animate-spin ml-1" />
+                </>
+              ) : initialData ? (
+                <>
+                  Update Course <PlusIcon className="ml-1" size={16} />
                 </>
               ) : (
                 <>

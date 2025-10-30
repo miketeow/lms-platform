@@ -10,6 +10,16 @@ const nextConfig: NextConfig = {
       },
     },
   },
+
+  images: {
+    remotePatterns: [
+      {
+        hostname: "mike-lms-platform.t3.storage.dev",
+        port: "",
+        protocol: "https",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

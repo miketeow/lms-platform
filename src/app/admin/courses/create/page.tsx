@@ -3,7 +3,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { requireAdminPage } from "@/app/data/admin/require-admin-page";
-import CreateCourseForm from "./create-course-form";
+import CourseForm from "../_components/course-form";
 
 export default async function CourseCreationPage() {
   await requireAdminPage();
@@ -19,7 +19,7 @@ export default async function CourseCreationPage() {
         <h1 className="text-2xl font-bold">Create Course</h1>
       </div>
 
-      <CreateCourseForm />
+      <CourseForm />
     </>
   );
 }
