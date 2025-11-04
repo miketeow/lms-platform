@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import CourseForm from "../../_components/course-form";
+import { CourseStructure } from "../../_components/course-structure";
 
 type Params = Promise<{ courseId: string }>;
 
@@ -36,6 +37,19 @@ export default async function EditCourse({ params }: { params: Params }) {
             </CardHeader>
             <CardContent>
               <CourseForm initialData={data} />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="course-structure">
+          <Card>
+            <CardHeader>
+              <CardTitle>Course Structure</CardTitle>
+              <CardDescription>
+                Here you can update the course structure
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <CourseStructure data={data} />
             </CardContent>
           </Card>
         </TabsContent>
