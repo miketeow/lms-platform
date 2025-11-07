@@ -26,6 +26,7 @@ interface iAppProps {
 }
 export function AdminCourseCard({ data }: iAppProps) {
   const thumnailUrl = useConstructUrl(data.fileKey);
+
   return (
     <Card className="group relative py-0 gap-0">
       {/*absolute dropdown*/}
