@@ -3,7 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useConstructUrl } from "@/hooks/use-construct";
+import { constructS3Url } from "@/lib/utils";
+
 import { SchoolIcon, TimerIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +13,7 @@ interface PublicCourseCardProps {
   data: PublicCourseType;
 }
 export function PublicCourseCard({ data }: PublicCourseCardProps) {
-  const thumbnailUrl = useConstructUrl(data.fileKey);
+  const thumbnailUrl = constructS3Url(data.fileKey);
   return (
     <Card className="group relative py-0 gap-0">
       <Badge className="absolute top-2 right-2 z-10">{data.level}</Badge>

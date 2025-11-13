@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useConstructUrl } from "@/hooks/use-construct";
+import { constructS3Url } from "@/lib/utils";
 import {
   ArrowRight,
   Eye,
@@ -26,7 +26,7 @@ interface iAppProps {
   data: AdminAllCourseType;
 }
 export function AdminCourseCard({ data }: iAppProps) {
-  const thumnailUrl = useConstructUrl(data.fileKey);
+  const thumnailUrl = constructS3Url(data.fileKey);
 
   return (
     <Card className="group relative py-0 gap-0">

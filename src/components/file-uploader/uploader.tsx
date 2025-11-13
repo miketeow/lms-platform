@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { FileRejection, useDropzone } from "react-dropzone";
 import { Card, CardContent } from "../ui/card";
-import { cn } from "@/lib/utils";
+import { cn, constructS3Url } from "@/lib/utils";
 import {
   RenderEmptyState,
   RenderErrorState,
@@ -12,7 +12,6 @@ import {
 } from "./render-state";
 import { toast } from "sonner";
 import { v4 as uuidv4 } from "uuid";
-import { useConstructUrl } from "@/hooks/use-construct";
 
 interface FileState {
   id: string | null;
@@ -33,7 +32,7 @@ interface iAppProps {
 }
 
 export function Uploader({ value, onChange, fileTypeAccepted }: iAppProps) {
-  const fileUrl = useConstructUrl(value || "");
+  const fileUrl = constructS3Url(value || "");
   const [fileState, setFileState] = useState<FileState>({
     error: false,
     file: null,
@@ -96,7 +95,7 @@ export function Uploader({ value, onChange, fileTypeAccepted }: iAppProps) {
           xhr.upload.onprogress = (event) => {
             if (event.lengthComputable) {
               const percentageCompleted = Math.round(
-                (event.loaded / event.total) * 100,
+                (event.loaded / event.total) * 100
               );
               setFileState((prev) => ({
                 ...prev,
@@ -140,7 +139,7 @@ export function Uploader({ value, onChange, fileTypeAccepted }: iAppProps) {
         }));
       }
     },
-    [fileTypeAccepted, onChange],
+    [fileTypeAccepted, onChange]
   );
 
   const onDrop = useCallback(
@@ -164,7 +163,7 @@ export function Uploader({ value, onChange, fileTypeAccepted }: iAppProps) {
         uploadFile(file);
       }
     },
-    [fileState.objectUrl, uploadFile, fileTypeAccepted],
+    [fileState.objectUrl, uploadFile, fileTypeAccepted]
   );
 
   async function handleRemoveFile() {
@@ -226,11 +225,11 @@ export function Uploader({ value, onChange, fileTypeAccepted }: iAppProps) {
   function rejectedFiles(fileRejection: FileRejection[]) {
     if (fileRejection.length) {
       const tooManyFiles = fileRejection.find(
-        (rejection) => rejection.errors[0].code === "too-many-files",
+        (rejection) => rejection.errors[0].code === "too-many-files"
       );
 
       const fileTooLarge = fileRejection.find(
-        (rejection) => rejection.errors[0].code === "file-too-large",
+        (rejection) => rejection.errors[0].code === "file-too-large"
       );
 
       if (tooManyFiles) {
@@ -296,7 +295,7 @@ export function Uploader({ value, onChange, fileTypeAccepted }: iAppProps) {
         "relative border-2 border-dashed transition-colors duration-200 ease-in-out w-full h-64",
         isDragActive
           ? "border-primary bg-primary/10 border-solid "
-          : "border-border hover:border-primary",
+          : "border-border hover:border-primary"
       )}
     >
       <CardContent className="flex items-center justify-center h-full w-full p-4">
