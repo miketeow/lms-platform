@@ -53,7 +53,7 @@ export function LessonForm({ data, chapterId, courseId }: LessonFormProps) {
   async function onSubmit(values: LessonSchemaType) {
     startTransition(async () => {
       const { data: result, error } = await tryCatch(
-        updateLesson(values, data.id),
+        updateLesson(values, data.id)
       );
 
       if (error) {
@@ -111,7 +111,10 @@ export function LessonForm({ data, chapterId, courseId }: LessonFormProps) {
                   <FormItem>
                     <FormLabel>Lesson Description</FormLabel>
                     <FormControl>
-                      <RichTextEditor field={field} />
+                      <RichTextEditor
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

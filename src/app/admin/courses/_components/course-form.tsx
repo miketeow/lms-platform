@@ -171,7 +171,10 @@ export default function CourseForm({ initialData }: CourseFormProps) {
                 <FormItem className="w-full">
                   <FormLabel>Description</FormLabel>
                   <FormControl>
-                    <RichTextEditor field={field} />
+                    <RichTextEditor
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
