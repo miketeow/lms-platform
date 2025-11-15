@@ -3,11 +3,12 @@
 import { requireAdminApi } from "@/app/data/admin/require-admin-api";
 import prisma from "@/lib/db";
 import { AuthError, ForbiddenError } from "@/lib/errors";
+import { stripe } from "@/lib/stripe";
 import { ApiResponse } from "@/lib/types";
 import { courseSchema, CourseSchemaType } from "@/lib/zodSchema";
 
 export async function CreateCourse(
-  values: CourseSchemaType,
+  values: CourseSchemaType
 ): Promise<ApiResponse> {
   try {
     const session = await requireAdminApi();
@@ -20,10 +21,20 @@ export async function CreateCourse(
       };
     }
 
+    const data = await stripe.products.create({
+      name: validation.data.title,
+      description: validation.data.smallDescription,
+      default_price_data: {
+        currency: "myr",
+        unit_amount: validation.data.price * 100,
+      },
+    });
+
     await prisma.course.create({
       data: {
         ...validation.data,
         userId: session.user.id,
+        stripePriceId: data.default_price as string,
       },
     });
 
