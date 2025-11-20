@@ -14,6 +14,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: "https",
+        hostname: "images.unsplash.com", // Allow Unsplash (Seed Data)
+      },
+      {
         hostname: "mike-lms-platform.t3.storage.dev",
         port: "",
         protocol: "https",

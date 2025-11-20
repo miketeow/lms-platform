@@ -17,5 +17,8 @@ export function createSlug(text: string) {
 }
 
 export function constructS3Url(key: string) {
+  if (key.startsWith("http")) {
+    return key;
+  }
   return `https://${env.NEXT_PUBLIC_S3_BUCKET_NAME_IMAGES}.t3.storage.dev/${key}`;
 }
