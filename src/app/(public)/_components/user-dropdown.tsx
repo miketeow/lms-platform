@@ -73,7 +73,7 @@ export function UserDropdown({ email, name, image }: iAppProps) {
                 className="opacity-60"
                 aria-hidden="true"
               />
-              <span>Dashboard</span>
+              <span>My Learning</span>
             </Link>
           </DropdownMenuItem>
         </DropdownMenuGroup>

@@ -61,8 +61,12 @@ const chartConfig = {
 
 interface ChartAreaInteractiveProps {
   data: { date: string; enrollment: number }[];
+  id?: string;
 }
-export function ChartAreaInteractive({ data }: ChartAreaInteractiveProps) {
+export function ChartAreaInteractive({
+  data,
+  id = "enrollment-chart",
+}: ChartAreaInteractiveProps) {
   const totalEnrollmentsNumber = useMemo(
     () => data.reduce((acc, curr) => acc + curr.enrollment, 0),
     [data]
@@ -81,7 +85,11 @@ export function ChartAreaInteractive({ data }: ChartAreaInteractiveProps) {
         </CardDescription>
       </CardHeader>
       <CardContent className="px-2 pt-4 sm:px-6 sm:pt-6">
-        <ChartContainer config={chartConfig} className="aspect-auto h-[250px]">
+        <ChartContainer
+          config={chartConfig}
+          className="aspect-auto h-[250px]"
+          id={id}
+        >
           <BarChart
             data={data}
             margin={{

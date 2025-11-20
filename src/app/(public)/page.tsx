@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
+import HeroActions from "./_components/hero-actions";
 
 interface featureProps {
   title: string;
@@ -48,26 +49,7 @@ export default function Home() {
             Discover a new way to learn with our modern, interactive learning
             management system. Access high-quality courses anytime, anywhere.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 mt-8">
-            <Link
-              href="/courses"
-              className={buttonVariants({
-                size: "lg",
-              })}
-            >
-              Explore Courses
-            </Link>
-
-            <Link
-              href="/login"
-              className={buttonVariants({
-                size: "lg",
-                variant: "outline",
-              })}
-            >
-              Sign In
-            </Link>
-          </div>
+          <HeroActions />
         </div>
       </section>
       <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-32">

@@ -9,10 +9,11 @@ import { UserDropdown } from "./user-dropdown";
 const navigationItems = [
   { name: "Home", href: "/" },
   { name: "Courses", href: "/courses" },
-  { name: "Dashboard", href: "/admin" },
+  { name: "My Learning", href: "/dashboard" },
 ];
 export default function Navbar() {
   const { data: session, isPending } = authClient.useSession();
+  const isAdmin = session?.user.role === "admin";
   return (
     <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur-[backdrop-filter]:bg-background/60">
       <div className="container flex min-h-16 items-center mx-auto px-4 md:px-6 lg:px-8">
@@ -24,15 +25,33 @@ export default function Navbar() {
         {/*desktop navigation*/}
         <nav className="hidden md:flex md:flex-1 md:items-center md:justify-between minh">
           <div className="flex items-center space-x-4">
-            {navigationItems.map((item) => (
+            <Link
+              href="/"
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              Home
+            </Link>
+            <Link
+              href="/courses"
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              Courses
+            </Link>
+            <Link
+              href="/dashboard"
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
+              My Learning
+            </Link>
+
+            {isAdmin && !isPending && (
               <Link
-                key={item.name}
-                href={item.href}
+                href="/admin"
                 className="text-sm font-medium transition-colors hover:text-primary"
               >
-                {item.name}
+                Admin Studio
               </Link>
-            ))}
+            )}
           </div>
 
           <div className="flex items-center space-x-4">
