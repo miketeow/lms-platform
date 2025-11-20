@@ -6,11 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { UserDropdown } from "./user-dropdown";
 
-const navigationItems = [
-  { name: "Home", href: "/" },
-  { name: "Courses", href: "/courses" },
-  { name: "My Learning", href: "/dashboard" },
-];
 export default function Navbar() {
   const { data: session, isPending } = authClient.useSession();
   const isAdmin = session?.user.role === "admin";

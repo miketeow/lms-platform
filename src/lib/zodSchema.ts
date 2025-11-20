@@ -1,7 +1,5 @@
 import z from "zod";
 
-const stripHtml = (html: string) => html.replace(/<[^>]*>?/gm, "");
-
 export const courseLevels = ["Beginner", "Intermediate", "Advanced"] as const;
 
 export const courseStatus = ["Draft", "Published", "Archived"] as const;
