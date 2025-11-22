@@ -1,10 +1,9 @@
-import { PrismaClient } from "@/generated/prisma/client";
 import { CourseStatus, CourseLevel } from "@/generated/prisma/enums";
+import { prisma } from "@/lib/db";
 
-const prisma = new PrismaClient();
-
-// 🔴 PASTE YOUR USER ID HERE AGAIN
-const TEACHER_ID = "VcL14ILuoARMBx7ZCy7Kv99Tu26KMkW8";
+// 🔴 IMPORTANT: Before running this script, replace the ID below
+// with the User ID of your actual admin account from your database.
+const TEACHER_ID = "user_2lq3...";
 
 // Helper to convert plain text to Tiptap JSON structure
 const toRichText = (text: string) => {
