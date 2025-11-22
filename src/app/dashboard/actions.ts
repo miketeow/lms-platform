@@ -2,7 +2,7 @@
 
 import { ApiResponse } from "@/lib/types";
 import { requireUser } from "../data/user/require-user";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function markLessonComplete(

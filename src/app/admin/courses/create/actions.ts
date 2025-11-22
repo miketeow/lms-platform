@@ -1,7 +1,7 @@
 "use server";
 
 import { requireAdminApi } from "@/app/data/admin/require-admin-api";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/db";
 import { AuthError, ForbiddenError } from "@/lib/errors";
 import { stripe } from "@/lib/stripe";
 import { ApiResponse } from "@/lib/types";

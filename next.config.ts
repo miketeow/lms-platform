@@ -10,10 +10,6 @@ const nextConfig: NextConfig = {
       },
     },
   },
-  outputFileTracingIncludes: {
-    "/api/**/*": ["./src/generated/prisma/**/*"],
-    "/*": ["./src/generated/prisma/**/*"],
-  },
 
   images: {
     remotePatterns: [

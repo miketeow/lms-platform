@@ -1,7 +1,7 @@
 "use server";
 
 import { requireAdminApi } from "@/app/data/admin/require-admin-api";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/db";
 import { AuthError, ForbiddenError } from "@/lib/errors";
 import { ApiResponse } from "@/lib/types";
 import {
@@ -16,7 +16,7 @@ import { revalidatePath } from "next/cache";
 
 export async function EditCourse(
   values: CourseSchemaType,
-  courseId: string,
+  courseId: string
 ): Promise<ApiResponse> {
   try {
     const session = await requireAdminApi();
@@ -62,7 +62,7 @@ export async function EditCourse(
 export async function reorderLessons(
   chapterId: string,
   lessons: { id: string; position: number }[],
-  courseId: string,
+  courseId: string
 ): Promise<ApiResponse> {
   await requireAdminApi();
   try {
@@ -82,7 +82,7 @@ export async function reorderLessons(
         data: {
           position: lesson.position,
         },
-      }),
+      })
     );
 
     await prisma.$transaction(updates);
@@ -103,7 +103,7 @@ export async function reorderLessons(
 
 export async function reorderChapters(
   courseId: string,
-  chapters: { id: string; position: number }[],
+  chapters: { id: string; position: number }[]
 ): Promise<ApiResponse> {
   await requireAdminApi();
   try {
@@ -130,7 +130,7 @@ export async function reorderChapters(
         data: {
           position: chapter.position,
         },
-      }),
+      })
     );
 
     await prisma.$transaction(updates);
@@ -150,7 +150,7 @@ export async function reorderChapters(
 }
 
 export async function createChapter(
-  values: ChapterSchemaType,
+  values: ChapterSchemaType
 ): Promise<ApiResponse> {
   await requireAdminApi();
   try {
@@ -198,7 +198,7 @@ export async function createChapter(
 }
 
 export async function createLesson(
-  values: LessonSchemaType,
+  values: LessonSchemaType
 ): Promise<ApiResponse> {
   await requireAdminApi();
   try {
@@ -365,7 +365,7 @@ export async function deleteChapter({
     const chapters = courseWithChapters.chapter;
 
     const chapterToDelete = chapters.find(
-      (chapter) => chapter.id === chapterId,
+      (chapter) => chapter.id === chapterId
     );
 
     if (!chapterToDelete) {
@@ -376,7 +376,7 @@ export async function deleteChapter({
     }
 
     const remainingChapters = chapters.filter(
-      (chapter) => chapter.id !== chapterId,
+      (chapter) => chapter.id !== chapterId
     );
 
     const updates = remainingChapters.map((chapter, index) => {

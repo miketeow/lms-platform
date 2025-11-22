@@ -1,6 +1,6 @@
 import "server-only";
 import { requireAdminApi } from "./require-admin-api";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/db";
 import { notFound } from "next/navigation";
 
 export async function adminGetCourse(courseId: string) {

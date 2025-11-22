@@ -1,4 +1,4 @@
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/db";
 import { requireAdminApi } from "./require-admin-api";
 
 export async function adminGetRecentCourses() {

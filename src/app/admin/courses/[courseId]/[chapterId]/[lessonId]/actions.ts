@@ -1,13 +1,13 @@
 "use server";
 
 import { requireAdminApi } from "@/app/data/admin/require-admin-api";
-import prisma from "@/lib/db";
+import { prisma } from "@/lib/db";
 import { ApiResponse } from "@/lib/types";
 import { lessonSchema, LessonSchemaType } from "@/lib/zodSchema";
 
 export async function updateLesson(
   values: LessonSchemaType,
-  lessonId: string,
+  lessonId: string
 ): Promise<ApiResponse> {
   await requireAdminApi();
 
